@@ -23,10 +23,7 @@ class RetroRepository @Inject constructor(private val retroServiceInterface: Ret
     fun makeApiCall(query: String?) {
         val call: Call<RepositoriesList> = retroServiceInterface.getDataFromAPI(query!!)
         call?.enqueue(object : Callback<RepositoriesList>{
-            override fun onResponse(
-                call: Call<RepositoriesList>,
-                response: Response<RepositoriesList>
-            ) {
+            override fun onResponse(call: Call<RepositoriesList>, response: Response<RepositoriesList>) {
                 if(response.isSuccessful) {
                     appDao.deleteAllRecords()
                     response.body()?.items?.forEach {
