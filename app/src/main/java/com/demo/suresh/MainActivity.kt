@@ -2,7 +2,8 @@ package com.demo.suresh
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.core.content.ContentProviderCompat.requireContext
+import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.work.*
 import com.demo.suresh.adapter.RecyclerViewAdapter
 import com.demo.suresh.model.RepositoryData
+import com.demo.suresh.utils.RecyclerItemClickListener
 import com.demo.suresh.viewmodel.MainActivityViewModel
 import com.demo.suresh.workmanger.MyWorkManger
 import dagger.hilt.android.AndroidEntryPoint
@@ -63,6 +65,7 @@ class MainActivity : AppCompatActivity() {
             recyclerViewAdapter = RecyclerViewAdapter()
             adapter =recyclerViewAdapter
         }
+
     }
 
     private fun initMainViewModel() {
@@ -70,9 +73,20 @@ class MainActivity : AppCompatActivity() {
         viewModel.getAllRepositoryList().observe(this, Observer<List<RepositoryData>>{
             recyclerViewAdapter.setListData(it)
             recyclerViewAdapter.notifyDataSetChanged()
+
+            recyclerView.addOnItemTouchListener(RecyclerItemClickListener(this, recyclerView, object : RecyclerItemClickListener.OnItemClickListener{
+                override fun onItemClick(view: View, position: Int) {
+                    var name: String = it.get(position).name.toString()
+                    Toast.makeText(this@MainActivity, "Name :$name", Toast.LENGTH_SHORT).show()
+                }
+                override fun onItemLongClick(view: View?, position: Int) {
+                    TODO("do nothing")
+                }
+            }))
         })
 
-
        // viewModel.makeApiCall()
+
     }
+
 }

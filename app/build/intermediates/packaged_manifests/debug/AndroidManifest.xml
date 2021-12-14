@@ -27,7 +27,9 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/Theme.cutomtheme" >
-        <activity android:name="com.demo.suresh.MainActivity" >
+        <activity
+            android:name="com.demo.suresh.MainActivity"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
